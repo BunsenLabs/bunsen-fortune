@@ -13,7 +13,9 @@ The `fortune` program, contained in the `fortune-mod` package on most Linux syst
 
 # Installation
 
-`sudo cp crunchbang crunchbang.dat /usr/share/fortune/`
+`sudo cp crunchbang crunchbang.dat /usr/share/fortune/`  
+or  
+`sudo cp crunchbang crunchbang.dat /usr/share/games/fortunes/`
 
 # Customization & Changes
 
