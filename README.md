@@ -27,7 +27,7 @@ file with `strfile crunchbang`, and re-install.
 
 # TODO:
 
-* We really, really need more cookies. Short conversations are also welcome, not only quotes from individuals.
+* We need more diversity. Short conversations are also welcome, not only quotes from individuals.
 * some sort of voting/polling system? or should we just let it grow and grow?
 * debian package.
 * AUR package.
