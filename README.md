@@ -27,7 +27,7 @@ file with `strfile crunchbang`, and re-install.
 
 # TODO:
 
-* right now this is more of an Awebb-appreciation fortune file. We really, really need more cookies.
+* We really, really need more cookies. Short conversations are also welcome, not only quotes from individuals.
 * some sort of voting/polling system? or should we just let it grow and grow?
 * debian package.
 * AUR package.
