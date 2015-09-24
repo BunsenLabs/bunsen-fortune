@@ -17,10 +17,16 @@ The `fortune` program, contained in the `fortune-mod` package on most Linux syst
 or  
 `sudo cp crunchbang crunchbang.dat /usr/share/games/fortunes/`
 
+# Folded or Not?
+
+Many (classical, old) fortune cookie files are folded to max. 80 chars width.  
+I didn't see much sense in doing so, but i have now added a folded version.  
+Which one is better?
+
 # Customization & Changes
 
 Please open an Issue, or post to [this thread](http://crunchbang.org/forums/viewtopic.php?pid=439411)
-if you want to add or change something.
+if you want to add or change something. or make a merge request, or pm me, anything!
 
 You can make changes to your local copy, but then have to regenerate the `crunchbang.dat`
 file with `strfile crunchbang`, and re-install.
