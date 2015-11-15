@@ -13,11 +13,15 @@ fi
 function get_input {
 	# $1: list of choices
 	# $2: default, if the user presses return (ignored if empty)
-	default="$2"
-	[[ "x$default" == "x" ]] && default="none"
+	if [[ "x$2" == "x" ]]
+	then
+		defaultstring="no default"
+	else
+		defaultstring="Enter=$2"
+	fi
 	while true
 	do
-	read -p "Your choice (Enter=$default): " input
+	read -p "Your choice ($defaultstring): " input
 		for i in $1 ; do
 			if [[ "$input" == "$i" ]]
 			then
@@ -25,9 +29,9 @@ function get_input {
 				break 2
 			fi
 		done
-		if [[ "$input" == "" ]] && [[ "$default" != "none" ]]
+		if [[ "$input" == "" ]] && [[ "x$2" != "x" ]]
 		then
-			echo "$default"
+			echo "$2"
 			break
 		fi
 	done
@@ -37,7 +41,7 @@ mkdir -p build
 
 choices="f n"
 echo "Do you want to build the folded or the normal version ($choices)?"
-case "$(get_input "$choices" n)" in
+case "$(get_input "$choices" f)" in
 	f) FLD="$(which fold)"
 		if [[ "x$FLD" == "x" ]] ; then
 			echo "fold is not found in \$PATH. This most probably means that coreutils is not installed. Cannot continue."
