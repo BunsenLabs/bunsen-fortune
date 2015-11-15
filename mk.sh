@@ -33,8 +33,6 @@ function get_input {
 	done
 }
 
-mkdir -p build
-
 choices="f n"
 echo "Do you want to build the folded or the normal version ($choices)?"
 case "$(get_input "$choices" n)" in
@@ -56,7 +54,7 @@ installfile="build/crunchbang.dat"
 $STRF "$buildfile" "$installfile"
 
 # optional: install
-installpath="/usr/share/fortune/"
+installpath="/usr/share/fortune"
 choices="y n"
 echo "$sep
 Do you want to install to a directory of your choice ($choices)?"
@@ -65,11 +63,14 @@ then
 	input=""
 	while [ ! -d "$input" ]
 	do
-		read -p "Please enter install path (Default=Enter chooses $installpath): " input
+		read -p "Please enter install path (Enter=$installpath): " input
 		[[ "x$input" == "x" ]] && input="$installpath"
 	done
+	user="$($(which ls) -ld "$input" | awk '{print $3}')"
 	echo "$sep
-Copying $buildfile $installfile to $installpath..."
-	sudo -u "$($(which ls) -ld "$input" | awk '{print $3}')" cp -i "$buildfile" "$installfile" "$installpath"
+Copying $buildfile to $installpath/crunchbang"
+	sudo -u "$user" cp -i "$buildfile" "$installpath/crunchbang"
+	echo "Copying $installfile to $installpath/crunchbang.dat"
+	sudo -u "$user" cp -i "$installfile" "$installpath/crunchbang.dat"
 fi
 
