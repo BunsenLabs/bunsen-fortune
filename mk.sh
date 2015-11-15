@@ -70,9 +70,9 @@ then
 	done
 	user="$($(which ls) -ld "$input" | awk '{print $3}')"
 	echo "$sep
-Copying $buildfile to $installpath/crunchbang"
-	sudo -u "$user" cp -i "$buildfile" "$installpath/crunchbang"
-	echo "Copying $installfile to $installpath/crunchbang.dat"
-	sudo -u "$user" cp -i "$installfile" "$installpath/crunchbang.dat"
+Copying $buildfile to $input/crunchbang"
+	sudo -u "$user" cp -i "$buildfile" "$input/crunchbang"
+	echo "Copying $installfile to $input/crunchbang.dat"
+	sudo -u "$user" cp -i "$installfile" "$input/crunchbang.dat"
 fi
 
