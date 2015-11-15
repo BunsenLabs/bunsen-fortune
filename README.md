@@ -16,13 +16,13 @@ Possibly `gnu coreutils` for the `mk.sh` script.
 
 the `mk.sh` script will build the necessary files from the `crunchbang` file and
 prompt you to copy them (install) to a directory of your choice.  
-This also makes it easier to manually add cookies to the file.
+This also makes it easier to manually add cookies to the file.  
 Use `./mk.sh` to execute the build/install script.
 
 # Folded or Not?
 
 Many (classical, old) fortune cookie files are folded to max. 80 chars width.  
-I didn't see much sense in doing so, but i have added an option to the script.
+I have added this *as an option* to the script.  
 You can also choose the max. width to fold, always respecting word boundaries.
 
 # Customization & Changes
