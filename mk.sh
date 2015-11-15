@@ -33,6 +33,8 @@ function get_input {
 	done
 }
 
+mkdir -p build
+
 choices="f n"
 echo "Do you want to build the folded or the normal version ($choices)?"
 case "$(get_input "$choices" n)" in
