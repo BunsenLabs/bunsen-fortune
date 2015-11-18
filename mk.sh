@@ -48,15 +48,15 @@ case "$(get_input "$choices" f)" in
 			exit 1
 		fi
 		echo "How many columns (1-160)?"
-		buildfile="build/crunchbang-folded"
-		$FLD -s -w "$(get_input "$(seq -s' ' 160)" 80)" crunchbang > "$buildfile"
+		buildfile="build/cbbl-folded"
+		$FLD -s -w "$(get_input "$(seq -s' ' 160)" 80)" cbbl > "$buildfile"
 	;;
-	n) buildfile="crunchbang"
+	n) buildfile="cbbl"
 	;;
 esac
 
 # building the fortune-mod database
-installfile="build/crunchbang.dat"
+installfile="build/cbbl.dat"
 $STRF "$buildfile" "$installfile"
 
 # optional: install
@@ -74,9 +74,9 @@ then
 	done
 	user="$($(which ls) -ld "$input" | awk '{print $3}')"
 	echo "$sep
-Copying $buildfile to $input/crunchbang"
-	sudo -u "$user" cp -i "$buildfile" "$input/crunchbang"
-	echo "Copying $installfile to $input/crunchbang.dat"
-	sudo -u "$user" cp -i "$installfile" "$input/crunchbang.dat"
+Copying $buildfile to $input/cbbl"
+	sudo -u "$user" cp -i "$buildfile" "$input/cbbl"
+	echo "Copying $installfile to $input/cbbl.dat"
+	sudo -u "$user" cp -i "$installfile" "$input/cbbl.dat"
 fi
 
