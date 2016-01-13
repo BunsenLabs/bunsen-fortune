@@ -25,7 +25,7 @@ Use `./mk.sh` to execute the build/install script.
 
 Many (classical, old) fortune cookie files are folded to max. 80 chars width.  
 I have added this as an option to the script; you can also choose the max.
-width to fold, always respecting word boundaries.
+width to fold, always respecting word boundaries. This can be useful when fortune is used elsewhere than in a terminal emulator (screensaver, ...).
 
 ## Customization & Changes
 
