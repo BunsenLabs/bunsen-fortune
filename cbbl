@@ -168,4 +168,8 @@ Head_on_a_Stick: In Debian we trust!
 hhh: I want a beverage that makes my teeth look like dirt and my farts smell like death had a bad day.
 %
 pvsage: A clean reinstall is good for the soul.
-
+%
+damo: sudo apt-get install -t silly-backports brainremover
+sudo mv /usr/bin/{bl-exit,br-exit}
+Or is this too political?
+glittersloth: I blame GTK3.
