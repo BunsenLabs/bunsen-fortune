@@ -9,6 +9,8 @@ To be used as fortune cookies with `fortune`.
 
 `fortune cbbl`
 
+(if you choose to not install, you have to run it with `fortune ./build/cbbl`)
+
 ## Dependencies
 
 The `fortune` program, contained in the `fortune-mod` package on most Linux systems.  
