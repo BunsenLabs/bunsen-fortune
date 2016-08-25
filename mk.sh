@@ -49,14 +49,16 @@ case "$(get_input "$choices" f)" in
 		fi
 		echo "How many columns (1-160)?"
 		buildfile="build/cbbl-folded"
+		installfile="build/cbbl-folded.dat"
 		$FLD -s -w "$(get_input "$(seq -s' ' 160)" 80)" cbbl > "$buildfile"
 	;;
-	n) buildfile="cbbl"
+	n) buildfile="build/cbbl"
+		installfile="build/cbbl.dat"
+
 	;;
 esac
 
 # building the fortune-mod database
-installfile="build/cbbl.dat"
 $STRF "$buildfile" "$installfile"
 
 # optional: install
