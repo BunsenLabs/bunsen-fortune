@@ -39,6 +39,8 @@ function get_input {
 
 mkdir -p build
 
+buildfile="build/cbbl"
+installfile="build/cbbl.dat"
 choices="f n"
 echo "Do you want to build the folded or the normal version ($choices)?"
 case "$(get_input "$choices" f)" in
@@ -48,13 +50,9 @@ case "$(get_input "$choices" f)" in
 			exit 1
 		fi
 		echo "How many columns (1-160)?"
-		buildfile="build/cbbl-folded"
-		installfile="build/cbbl-folded.dat"
 		$FLD -s -w "$(get_input "$(seq -s' ' 160)" 80)" cbbl > "$buildfile"
 	;;
-	n) buildfile="build/cbbl"
-		installfile="build/cbbl.dat"
-
+	n) true
 	;;
 esac
 
