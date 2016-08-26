@@ -60,7 +60,7 @@ esac
 $STRF "$buildfile" "$installfile"
 
 # optional: install
-installpath="/usr/share/fortune"
+installpath="/usr/share/games/fortunes"
 choices="y n"
 echo "$sep
 Do you want to install to a directory of your choice ($choices)?"
