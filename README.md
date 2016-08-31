@@ -9,7 +9,7 @@ To be used as fortune cookies with `fortune`.
 
 `fortune cbbl`
 
-(if you choose to not install, you have to run it with `fortune ./build/cbbl`)
+If you choose to not install, you have to run it with `fortune build` from the repo's root.
 
 ## Dependencies
 

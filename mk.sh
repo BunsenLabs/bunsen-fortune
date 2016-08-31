@@ -63,7 +63,13 @@ $STRF "$buildfile" "$installfile"
 installpath="/usr/share/games/fortunes"
 choices="y n"
 echo "$sep
-Do you want to install to a directory of your choice ($choices)?"
+Do you want to install to a directory of your choice?
+If you do NOT install, you have to call fortune with the path to the _folder_
+containing the _compiled_ cookies, e.g. \fortune build\" from this directory.
+If you DO install, youshould install it to a path where the fortune program can
+find it. on debian systems, this is $installpath, on other systems it might be
+/usr/share/fortune or something else.
+Your choice ($choices)? "
 if [[ "$(get_input "$choices" n)" == "y" ]]
 then
 	input=""
