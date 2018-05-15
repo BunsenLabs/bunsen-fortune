@@ -1,0 +1,4 @@
+debian/bin usr
+cbbl usr/share/games/fortunes
+cbbl.dat usr/share/games/fortunes
+debian/images/bunsen-beaker.svg usr/share/pixmaps

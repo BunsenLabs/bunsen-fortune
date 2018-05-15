@@ -1,0 +1,18 @@
+Source: fortune-mod-cbbl
+Section: games
+Priority: optional
+Maintainer: John Crawley <john@bunsenlabs.org>
+Build-Depends: debhelper (>= 9), fortune-mod, help2man
+Standards-Version: 3.9.8
+Homepage: https://github.com/ohnonot/fortune-mod-cbbl
+Vcs-Git: https://github.com/BunsenLabs/fortune-mod-cbbl.git
+Vcs-Browser: https://github.com/BunsenLabs/fortune-mod-cbbl
+
+Package: fortune-mod-cbbl
+Architecture: all
+Depends: ${misc:Depends}, fortune-mod, libnotify-bin
+Description: Fortunes from the CrunchBang and BunsenLabs forums.
+ A collection of crunchy wisdom from the CrunchBang forums
+ and from the BunsenLabs forums
+ (BunsenLabs Linux is a community continuation of CrunchBang Linux).
+ To be used as fortune cookies with fortune.

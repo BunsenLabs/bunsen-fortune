@@ -1,0 +1,74 @@
+#!/bin/bash
+
+HELP="  bl-fortune is a script to display custom fortunes.
+
+Usage:  bl-fortune [OPTIONS]
+
+Options:
+        -i <icon>, --icon=<icon>    use different icon
+                                    (default is beaker)
+        -t <time>, --expiry-time=<time> set message expiry time
+                                    (default is 20000ms)
+        -c <name>, --cookie='<name>[ name]'  set fortune cookie name(s)
+                                    (default is cbbl)
+        -h, --help  show this message
+
+Description:
+        This is a wrapper round notify-send
+        - the icon and time options are the same.
+        Normally run without options,
+        the default behaviour is to choose a fortune
+        from the 'cbbl' collection, which is gathered
+        from CrunchBang and BunsenLabs forum posts.
+"
+
+error_exit() {
+    echo "$0 error: $1" >&2
+    exit 1
+}
+
+msg_icon=bunsen-beaker
+msg_time=20000
+# name of fortune file to use
+cookie=cbbl
+
+while [[ -n $1 ]]
+do
+    case $1 in
+    --help|-h)
+        echo "$HELP"
+        exit 0
+        ;;
+    -i)
+        msg_icon="$2"
+        shift 2
+        ;;
+    --icon=*)
+        msg_icon="${1#--icon=}"
+        shift
+        ;;
+    -t)
+        msg_time="$2"
+        shift 2
+        ;;
+    --expire-time=*)
+        msg_time="${1#--expire-time=}"
+        shift
+        ;;
+    -c)
+        cookie="$2"
+        shift 2
+        ;;
+    --cookie=*)
+        cookie="${1#--cookie=}"
+        shift
+        ;;
+    *)
+        error_exit "$1: no such option"
+        ;;
+    esac
+done
+
+notify-send --urgency=low --icon="$msg_icon" --expire-time="$msg_time" '...' "$(fortune $cookie)"
+
+exit
