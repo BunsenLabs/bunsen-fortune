@@ -50,7 +50,7 @@ default_section=1
 # BunsenLabs generic content
 # Other vendors, please edit to taste.
 includes="[authors]
-Written by the BunsenLabs team.
+Written by the CrunchBang and BunsenLabs forum members.
 
 [reporting bugs]
 Please report bugs at
