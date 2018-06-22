@@ -1,0 +1,120 @@
+#!/bin/bash
+
+msg_icon=bunsen-beaker
+msg_time_default=20000
+msg_time=$msg_time_default
+cookies=cbbl
+
+#~ It is said that average reading speed is ~250 words per minute for adults.
+#~ That means 4.166667 words per second.
+#~ I think it's fair to assume that the text should linger quite a bit longer,
+#~ almost twice as long. make that 2.5 words per second, that's a delay of 400ms
+#~ per word:
+delay=400
+add=5000 # let's add a few extra seconds to message expiry time
+
+HELP="  bl-fortune is a script to display custom fortunes.
+
+Usage:  bl-fortune [OPTIONS]
+
+Options:
+        -i <icon>, --icon=<icon>    use different icon
+                                    (default is $msg_icon)
+        -d <time>, --word-delay=<time> set delay per word, calculates
+                                    message expiry time based on text length
+                                    (default is ${delay}ms)
+                                    (overrides -t)
+        -t <time>, --expiry-time=<time> set message expiry time
+                                    (default is ${msg_time}ms)
+                                    (overrides -d)
+        -c <name>, --cookie='<name>[ name]'  set fortune cookie name(s)
+                                    (default is $cookies)
+        -h, --help  show this message
+
+Description:
+        This is a wrapper round notify-send
+        - the icon and time options are the same.
+        Normally run without options,
+        the default behaviour is to choose a fortune
+        from the 'cbbl' collection, which is gathered
+        from CrunchBang and BunsenLabs forum posts.
+"
+
+error_exit() {
+    echo "$0 error: $1" >&2
+    exit 1
+}
+
+msg_icon=bunsen-beaker
+msg_time=20000
+# name of fortune file to use
+cookie=cbbl
+
+while [[ -n $1 ]]
+do
+    case $1 in
+    --help|-h)
+        echo "$HELP"
+        exit 0
+        ;;
+    -i)
+        msg_icon="$2"
+        shift 2
+        ;;
+    --icon=*)
+        msg_icon="${1#--icon=}"
+        shift
+        ;;
+    -t)
+        msg_time="$2"
+        delay=0
+        shift 2
+        ;;
+    --expire-time=*)
+        msg_time="${1#--expire-time=}"
+        delay=0
+        shift
+        ;;
+    -d)
+        delay="$2"
+        msg_time=0
+        shift 2
+        ;;
+    --word-delay=*)
+        delay="${1#--word-delay=}"
+        msg_time=0
+        shift
+        ;;
+    -c)
+        cookie="$2"
+        shift 2
+        ;;
+    --cookie=*)
+        cookie="${1#--cookie=}"
+        shift
+        ;;
+    *)
+        error_exit "$1: no such option"
+        ;;
+    esac
+done
+
+text="$(fortune $cookie)"
+
+if (( delay > 0 )); then
+        words="$(wc -w <<<"$text")"
+        if (( words > 0 )); then
+                msg_time="$(( words * delay + add ))"
+        else
+                msg_time=$msg_time_default
+        fi
+fi
+
+echo "Timeout: ${msg_time}ms"
+
+header="${text%%: *}:"
+text="${text#*: }"
+
+notify-send --urgency=low --icon="$msg_icon" --expire-time="$msg_time" "$header" "$text"
+
+exit
