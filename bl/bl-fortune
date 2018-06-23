@@ -3,15 +3,15 @@
 msg_icon=bunsen-beaker
 msg_time_default=20000
 msg_time=$msg_time_default
-cookies=cbbl
+# name of fortune file(s) to use
+cookie=cbbl
 
 #~ It is said that average reading speed is ~250 words per minute for adults.
 #~ That means 4.166667 words per second.
 #~ I think it's fair to assume that the text should linger quite a bit longer,
-#~ almost twice as long. make that 2.5 words per second, that's a delay of 400ms
+#~ about twice as long. make that 2 words per second, that's a delay of 500ms
 #~ per word:
-delay=400
-add=5000 # let's add a few extra seconds to message expiry time
+delay=500
 
 HELP="  bl-fortune is a script to display custom fortunes.
 
@@ -28,7 +28,7 @@ Options:
                                     (default is ${msg_time}ms)
                                     (overrides -d)
         -c <name>, --cookie='<name>[ name]'  set fortune cookie name(s)
-                                    (default is $cookies)
+                                    (default is $cookie)
         -h, --help  show this message
 
 Description:
@@ -44,11 +44,6 @@ error_exit() {
     echo "$0 error: $1" >&2
     exit 1
 }
-
-msg_icon=bunsen-beaker
-msg_time=20000
-# name of fortune file to use
-cookie=cbbl
 
 while [[ -n $1 ]]
 do
@@ -104,7 +99,7 @@ text="$(fortune $cookie)"
 if (( delay > 0 )); then
         words="$(wc -w <<<"$text")"
         if (( words > 0 )); then
-                msg_time="$(( words * delay + add ))"
+                msg_time="$(( words * delay ))"
         else
                 msg_time=$msg_time_default
         fi
