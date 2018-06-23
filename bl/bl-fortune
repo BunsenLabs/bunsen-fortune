@@ -107,8 +107,11 @@ fi
 
 echo "Timeout: ${msg_time}ms"
 
-header="${text%%: *}:"
-text="${text#*: }"
+header=( $text )
+header="${header[0]}"
+text="${text#$header}"
+text="${text#$'\n'}"
+text="${text# }"
 
 notify-send --urgency=low --icon="$msg_icon" --expire-time="$msg_time" "$header" "$text"
 
