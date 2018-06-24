@@ -1,6 +1,6 @@
 #!/bin/bash
 
-msg_icon=bunsen-beaker
+msg_icon=bunsen-face
 msg_time_default=20000
 msg_time=$msg_time_default
 # name of fortune file(s) to use
