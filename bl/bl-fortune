@@ -97,7 +97,7 @@ do
     esac
 done
 
-text="$(fortune $cookie|sed 's/&/\&amp;/g; s/</\&lt;/g; s/>/\&gt;/g; s/"/\&quot;/g;')"
+text="$(fortune $cookie|sed 's/-/\-/g; s/&/\&amp;/g; s/</\&lt;/g; s/>/\&gt;/g; s/"/\&quot;/g;')"
 
 if (( delay > 0 )); then
         words="$(wc -w <<<"$text")"
@@ -111,6 +111,7 @@ fi
 echo "Timeout: ${msg_time}ms"
 
 header=( $text )
+if (( "${header[0]}" < 4 )) && (( "${header[0]}" < 4 ))
 header="${header[0]}"
 text="${text#$header}"
 text="${text#$'\n'}"
