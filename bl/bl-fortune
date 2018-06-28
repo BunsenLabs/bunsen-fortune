@@ -97,7 +97,7 @@ do
     esac
 done
 
-text="$(fortune $cookie|sed 's/-/\-/g; s/&/\&amp;/g; s/</\&lt;/g; s/>/\&gt;/g; s/"/\&quot;/g;')"
+text="$(fortune $cookie|sed 's/-/\\-/g; s/&/\&amp;/g; s/</\&lt;/g; s/>/\&gt;/g; s/"/\&quot;/g;')"
 
 if (( delay > 0 )); then
         words="$(wc -w <<<"$text")"
