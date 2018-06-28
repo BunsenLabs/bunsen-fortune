@@ -27,8 +27,11 @@ Options:
         -t <time>, --expiry-time=<time> set message expiry time
                                     (default is ${msg_time}ms)
                                     (overrides -d)
-        -c <name>, --cookie='<name>[ name]'  set fortune cookie name(s)
+        -c <name>, --cookie='<name>[ name]'  set fortune cookie list(s)
                                     (default is $cookie)
+                                    (this can contain multiple fortunes and
+                                    options to fortune. Example:
+                                    \"-ae cbbl fortunes\")
         -h, --help  show this message
 
 Description:
@@ -94,7 +97,7 @@ do
     esac
 done
 
-text="$(fortune $cookie|sed 's/&/\&amp;/g; s/</\&lt;/g; s/>/\&gt;/g; s/"/\&quot;/g; s/'"'"'/\&#39;/g')"
+text="$(fortune $cookie|sed 's/&/\&amp;/g; s/</\&lt;/g; s/>/\&gt;/g; s/"/\&quot;/g;')"
 
 if (( delay > 0 )); then
         words="$(wc -w <<<"$text")"
