@@ -111,7 +111,7 @@ fi
 echo "Timeout: ${msg_time}ms"
 
 header=( $text )
-if (( "${header[0]}" < 4 )) && (( "${header[0]}" < 4 ))
+#~ if (( "${header[0]}" < 4 )) && (( "${header[0]}" < 4 ))
 header="${header[0]}"
 text="${text#$header}"
 text="${text#$'\n'}"
