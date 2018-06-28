@@ -47,6 +47,14 @@ error_exit() {
     echo "$0 error: $1" >&2
     exit 1
 }
+# need to escape a few chars that make notify-send puke (because it defaults to pango markup)
+escapes() {
+    retval="${1//-/\\-}"
+    retval="${retval//&/\&amp;}"
+    retval="${retval//</\&lt;}"
+    retval="${retval//>/\&gt;}"
+    retval="${retval//\"/\&quot;}"
+}
 
 while [[ -n $1 ]]
 do
@@ -97,25 +105,37 @@ do
     esac
 done
 
-text="$(fortune $cookie|sed 's/-/\\-/g; s/&/\&amp;/g; s/</\&lt;/g; s/>/\&gt;/g; s/"/\&quot;/g;')"
+text="$(fortune $cookie)"
 
 if (( delay > 0 )); then
-        words="$(wc -w <<<"$text")"
-        if (( words > 0 )); then
-                msg_time="$(( words * delay ))"
-        else
-                msg_time=$msg_time_default
-        fi
+    words="$(wc -w <<<"$text")"
+    if (( words > 0 )); then
+        msg_time="$(( words * delay ))"
+    else
+        msg_time=$msg_time_default
+    fi
 fi
 
-echo "Timeout: ${msg_time}ms"
+printf "Timeout\t${msg_time}ms\n"
 
 header=( $text )
-#~ if (( "${header[0]}" < 4 )) && (( "${header[0]}" < 4 ))
-header="${header[0]}"
+if (( "${#header[0]}" < 4 )) && (( "${#header[1]}" < 16 )); then
+    header="${header[0]} ${header[1]}"
+else
+    header="${header[0]}"
+fi
+
 text="${text#$header}"
 text="${text#$'\n'}"
 text="${text# }"
+
+escapes "$header"
+header="$retval"
+printf "Header:\t$header\n"
+
+escapes "$text"
+text="$retval"
+printf "Text:\t$text\n"
 
 notify-send --urgency=low --icon="$msg_icon" --expire-time="$msg_time" "$header" "$text"
 
