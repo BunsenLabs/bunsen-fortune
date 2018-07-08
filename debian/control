@@ -1,14 +1,14 @@
-Source: fortune-mod-cbbl
+Source: bunsen-fortune
 Section: games
 Priority: optional
 Maintainer: John Crawley <john@bunsenlabs.org>
 Build-Depends: debhelper (>= 9), fortune-mod, help2man
 Standards-Version: 3.9.8
-Homepage: https://github.com/ohnonot/fortune-mod-cbbl
-Vcs-Git: https://github.com/BunsenLabs/fortune-mod-cbbl.git
-Vcs-Browser: https://github.com/BunsenLabs/fortune-mod-cbbl
+Homepage: https://notabug.org/ohnonot/fortune-mod-cbbl
+Vcs-Git: https://github.com/BunsenLabs/bunsen-fortune.git
+Vcs-Browser: https://github.com/BunsenLabs/bunsen-fortune
 
-Package: fortune-mod-cbbl
+Package: bunsen-fortune
 Architecture: all
 Depends: ${misc:Depends}, fortune-mod, libnotify-bin
 Description: Fortunes from the CrunchBang and BunsenLabs forums.

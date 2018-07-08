@@ -1,15 +1,15 @@
-fortune-mod-cbbl for Debian
---------------------------
+bunsen-fortune: fortune-mod-cbbl for Debian
+-------------------------------------------
 
-This is a debianization of https://github.com/ohnonot/fortune-mod-cbbl
+This is a debianization of https://notabug.org/ohnonot/fortune-mod-cbbl
 which holds a collection of quotes from the CrunchBang and BunsenLabs forums.
 
 A .dat file is generated from the cookie 'cbbl' and both files installed to
 /usr/share/games/fortune/.
 
-A script /usr/bin/bl-fortune and icon bunsen-beaker
+A script /usr/bin/bl-fortune and icon bunsen-face
 are provided to display these fortunes (see bl-fortune --help),
 but they may also be directly used as 'fortune cbbl'.
 
- -- John Crawley <john@bunsenlabs.org>  Mon, 14 May 2018 16:22:52 +0900
+ -- John Crawley <john@bunsenlabs.org>  Sun, 08 Jul 2018 13:54:23 +0900
 
