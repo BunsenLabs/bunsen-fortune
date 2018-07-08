@@ -1,3 +1,9 @@
+bunsen-fortune (9.1-2) helium; urgency=medium
+
+  * Bugfix: rename some files in debian directory.
+
+ -- John Crawley <john@bunsenlabs.org>  Sun, 08 Jul 2018 14:42:56 +0900
+
 bunsen-fortune (9.1-1) helium; urgency=medium
 
   * Rename package.
