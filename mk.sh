@@ -46,7 +46,7 @@ cp -f "$sourcefile" "$buildfile"
 
 choices="f n"
 echo "Do you want to build the folded or the normal version ($choices)?"
-case "$(get_input "$choices" f)" in
+case "$(get_input "$choices" n)" in
 	f) FLD="$(which fold)"
 		if [[ "x$FLD" == "x" ]] ; then
 			echo "fold is not found in \$PATH. This most probably means that coreutils is not installed. Cannot continue."

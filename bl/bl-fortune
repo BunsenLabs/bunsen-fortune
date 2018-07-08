@@ -1,0 +1,142 @@
+#!/bin/bash
+
+msg_icon=bunsen-face
+msg_time_default=20000
+msg_time=$msg_time_default
+# name of fortune file(s) to use
+cookie=cbbl
+
+#~ It is said that average reading speed is ~250 words per minute for adults.
+#~ That means 4.166667 words per second.
+#~ I think it's fair to assume that the text should linger quite a bit longer,
+#~ about twice as long. make that 2 words per second, that's a delay of 500ms
+#~ per word:
+delay=500
+
+HELP="  bl-fortune is a script to display custom fortunes.
+
+Usage:  bl-fortune [OPTIONS]
+
+Options:
+        -i <icon>, --icon=<icon>    use different icon
+                                    (default is $msg_icon)
+        -d <time>, --word-delay=<time> set delay per word, calculates
+                                    message expiry time based on text length
+                                    (default is ${delay}ms)
+                                    (overrides -t)
+        -t <time>, --expiry-time=<time> set message expiry time
+                                    (default is ${msg_time}ms)
+                                    (overrides -d)
+        -c <name>, --cookie='<name>[ name]'  set fortune cookie list(s)
+                                    (default is $cookie)
+                                    (this can contain multiple fortunes and
+                                    options to fortune. Example:
+                                    \"-ae cbbl fortunes\")
+        -h, --help  show this message
+
+Description:
+        This is a wrapper round notify-send
+        - the icon and time options are the same.
+        Normally run without options,
+        the default behaviour is to choose a fortune
+        from the 'cbbl' collection, which is gathered
+        from CrunchBang and BunsenLabs forum posts.
+"
+
+error_exit() {
+    echo "$0 error: $1" >&2
+    exit 1
+}
+# need to escape a few chars that make notify-send puke (because it defaults to pango markup)
+escapes() {
+    retval="${1//-/\\-}"
+    retval="${retval//&/\&amp;}"
+    retval="${retval//</\&lt;}"
+    retval="${retval//>/\&gt;}"
+    retval="${retval//\"/\&quot;}"
+}
+
+while [[ -n $1 ]]
+do
+    case $1 in
+    --help|-h)
+        echo "$HELP"
+        exit 0
+        ;;
+    -i)
+        msg_icon="$2"
+        shift 2
+        ;;
+    --icon=*)
+        msg_icon="${1#--icon=}"
+        shift
+        ;;
+    -t)
+        msg_time="$2"
+        delay=0
+        shift 2
+        ;;
+    --expire-time=*)
+        msg_time="${1#--expire-time=}"
+        delay=0
+        shift
+        ;;
+    -d)
+        delay="$2"
+        msg_time=0
+        shift 2
+        ;;
+    --word-delay=*)
+        delay="${1#--word-delay=}"
+        msg_time=0
+        shift
+        ;;
+    -c)
+        cookie="$2"
+        shift 2
+        ;;
+    --cookie=*)
+        cookie="${1#--cookie=}"
+        shift
+        ;;
+    *)
+        error_exit "$1: no such option"
+        ;;
+    esac
+done
+
+text="$(fortune $cookie)"
+
+if (( delay > 0 )); then
+    words="$(wc -w <<<"$text")"
+    if (( words > 0 )); then
+        msg_time="$(( words * delay ))"
+    else
+        msg_time=$msg_time_default
+    fi
+fi
+
+printf "Timeout\t${msg_time}ms\n"
+
+header=( $text )
+if (( "${#header[0]}" < 4 )) && (( "${#header[1]}" < 16 )); then
+    header="${header[0]} ${header[1]}"
+else
+    header="${header[0]}"
+fi
+
+text="${text#$header}"
+text="${text#$'\n'}"
+text="${text# }"
+
+escapes "$header"
+header="$retval"
+printf "Header:\t$header\n"
+
+escapes "$text"
+text="$retval"
+printf "Text:\t$text\n"
+
+notify-send --urgency=low --icon="$msg_icon" --expire-time="$msg_time" "$header" "$text"
+
+exit
