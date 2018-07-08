@@ -1,0 +1,4 @@
+bl/bl-fortune usr/bin
+bl/bunsen-face.svg usr/share/pixmaps
+cbbl usr/share/games/fortunes
+cbbl.dat usr/share/games/fortunes
