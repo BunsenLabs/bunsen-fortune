@@ -59,7 +59,7 @@ escapes() {
 }
 
 debugging() {
-    [[ "$debug" == 1 ]] && printf '%s' "$@"
+    [[ "$debug" == 1 ]] && echo -e "$@"
 }
 
 while [[ -n $1 ]]
