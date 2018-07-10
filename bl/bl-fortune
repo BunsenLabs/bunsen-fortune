@@ -126,7 +126,7 @@ if (( delay > 0 )); then
     fi
 fi
 
-debugging "Timeout\t${msg_time}ms\n"
+debugging "Timeout\t${msg_time}ms"
 
 header=( $text )
 if (( "${#header[0]}" < 4 )) && (( "${#header[1]}" < 16 )); then
@@ -141,11 +141,11 @@ text="${text# }"
 
 escapes "$header"
 header="$retval"
-debugging "Header:\t$header\n"
+debugging "Header:\t$header"
 
 escapes "$text"
 text="$retval"
-debugging "Text:\t$text\n"
+debugging "Text:\t$text"
 
 notify-send --urgency=low --icon="$msg_icon" --expire-time="$msg_time" "$header" "$text"
 
