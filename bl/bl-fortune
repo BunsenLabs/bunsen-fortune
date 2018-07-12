@@ -5,6 +5,7 @@ msg_time_default=20000
 msg_time=$msg_time_default
 # name of fortune file(s) to use
 cookie=cbbl
+debug=0
 
 #~ It is said that average reading speed is ~250 words per minute for adults.
 #~ That means 4.166667 words per second.
@@ -32,6 +33,7 @@ Options:
                                     (this can contain multiple fortunes and
                                     options to fortune. Example:
                                     \"-ae cbbl fortunes\")
+        -D                          debug - enable some terminal messages
         -h, --help  show this message
 
 Description:
@@ -54,6 +56,10 @@ escapes() {
     retval="${retval//</\&lt;}"
     retval="${retval//>/\&gt;}"
     retval="${retval//\"/\&quot;}"
+}
+
+debugging() {
+    [[ "$debug" == 1 ]] && echo "$@"
 }
 
 while [[ -n $1 ]]
@@ -86,6 +92,10 @@ do
         msg_time=0
         shift 2
         ;;
+    -D)
+        debug=1
+        shift 1
+        ;;
     --word-delay=*)
         delay="${1#--word-delay=}"
         msg_time=0
@@ -116,7 +126,7 @@ if (( delay > 0 )); then
     fi
 fi
 
-printf "Timeout\t${msg_time}ms\n"
+debugging "Timeout:  ${msg_time}ms"
 
 header=( $text )
 if (( "${#header[0]}" < 4 )) && (( "${#header[1]}" < 16 )); then
@@ -131,11 +141,11 @@ text="${text# }"
 
 escapes "$header"
 header="$retval"
-printf "Header:\t$header\n"
+debugging "Header:   $header"
 
 escapes "$text"
 text="$retval"
-printf "Text:\t$text\n"
+debugging "Text:     $text"
 
 notify-send --urgency=low --icon="$msg_icon" --expire-time="$msg_time" "$header" "$text"
 
