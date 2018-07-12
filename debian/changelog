@@ -1,3 +1,9 @@
+bunsen-fortune (9.1.1-1) helium; urgency=medium
+
+  * bl-fortune: Incorporate small upstream chamges.
+
+ -- John Crawley <john@bunsenlabs.org>  Thu, 12 Jul 2018 16:25:56 +0900
+
 bunsen-fortune (9.1-2) helium; urgency=medium
 
   * Bugfix: rename some files in debian directory.
