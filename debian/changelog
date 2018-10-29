@@ -1,3 +1,9 @@
+bunsen-fortune (9.1.2-1) helium; urgency=medium
+
+  * Merge upstream additions to fortune database.
+
+ -- John Crawley <john@bunsenlabs.org>  Mon, 29 Oct 2018 11:34:18 +0900
+
 bunsen-fortune (9.1.1-1) helium; urgency=medium
 
   * bl-fortune: Incorporate small upstream chamges.
