@@ -4,6 +4,7 @@
 # to generate man files from executables' --help options,
 # using help2man.
 # Tested on Dash, should work with other POSIX shells.
+# Version 20180531
 
 # Put this script in the package source debian/ directory
 # (or some other location, to taste),
@@ -50,7 +51,7 @@ default_section=1
 # BunsenLabs generic content
 # Other vendors, please edit to taste.
 includes="[authors]
-Written by the CrunchBang and BunsenLabs forum members.
+Written by the BunsenLabs team.
 
 [reporting bugs]
 Please report bugs at
