@@ -1,3 +1,12 @@
+bunsen-fortune (10.0-1) lithium; urgency=medium
+
+  * Migrate to Lithium repository.
+  * Upgrade standards version to 4.3.0, debhelper compat to 10.
+  * Update copyright year.
+  * debian/rules: Remove comments.
+
+ -- John Crawley <john@bunsenlabs.org>  Fri, 04 Jan 2019 18:23:16 +0900
+
 bunsen-fortune (9.1.2-1) helium; urgency=medium
 
   * Merge upstream additions to fortune database.
