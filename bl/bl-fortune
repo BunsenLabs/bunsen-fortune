@@ -12,7 +12,9 @@ debug=0
 #~ I think it's fair to assume that the text should linger quite a bit longer,
 #~ about twice as long. make that 2 words per second, that's a delay of 500ms
 #~ per word:
-delay=500
+word_delay=500
+char_delay=30
+delay=2000
 
 HELP="  bl-fortune is a script to display custom fortunes.
 
@@ -21,14 +23,23 @@ Usage:  bl-fortune [OPTIONS]
 Options:
         -i <icon>, --icon=<icon>    use different icon
                                     (default is $msg_icon)
-        -d <time>, --word-delay=<time> set delay per word, calculates
-                                    message expiry time based on text length
+        -w <time>, --word-delay=<time> set delay per word
+                                    (default is ${word_delay}ms)
+                                    (overrides -t)
+        -c <time>, --char-delay=<time> set delay per character
+                                    (default is ${char_delay}ms)
+                                    (overrides -t)
+        -d <time>, --delay=<time> set initial delay
                                     (default is ${delay}ms)
                                     (overrides -t)
-        -t <time>, --expiry-time=<time> set message expiry time
+
+        The options -w, -c and -d are cumulative, they add up to a final 
+        message display time.
+
+        -t <time>, --expiry-time=<time> set fixed message expiry time
                                     (default is ${msg_time}ms)
-                                    (overrides -d)
-        -c <name>, --cookie='<name>[ name]'  set fortune cookie list(s)
+                                    (overrides -d, -w, -c)
+        -C <name>, --cookie='<name>[ name]'  set fortune cookie list(s)
                                     (default is $cookie)
                                     (this can contain multiple fortunes and
                                     options to fortune. Example:
@@ -92,9 +103,15 @@ do
         msg_time=0
         shift 2
         ;;
-    -D)
-        debug=1
-        shift 1
+    --delay=*)
+        delay="${1#--delay=}"
+        msg_time=0
+        shift
+        ;;
+    -w)
+        word_delay="$2"
+        msg_time=0
+        shift 2
         ;;
     --word-delay=*)
         delay="${1#--word-delay=}"
@@ -102,6 +119,20 @@ do
         shift
         ;;
     -c)
+        char_delay="$2"
+        msg_time=0
+        shift 2
+        ;;
+    --char-delay=*)
+        char_delay="${1#--char-delay=}"
+        msg_time=0
+        shift
+        ;;
+    -D)
+        debug=1
+        shift 1
+        ;;
+    -C)
         cookie="$2"
         shift 2
         ;;
@@ -117,10 +148,24 @@ done
 
 text="$(fortune $cookie)"
 
-if (( delay > 0 )); then
+#~ if (( delay > 0 )); then
+    #~ words="$(wc -w <<<"$text")"
+    #~ if (( words > 0 )); then
+        #~ msg_time="$(( words * delay ))"
+    #~ else
+        #~ msg_time=$msg_time_default
+    #~ fi
+#~ fi
+
+# Improved algorithm, adding
+# 1. a fixed delay
+# 2. word_delay
+# 3. char_delay
+if (( delay > 0 )) && (( word_delay > 0 )) && (( char_delay > 0 )); then
     words="$(wc -w <<<"$text")"
-    if (( words > 0 )); then
-        msg_time="$(( words * delay ))"
+    chars="$(wc -m <<<"$text")"
+    if (( words > 0 )) && (( chars > 0 )); then
+        msg_time="$(( fixed_delay + (words * word_delay) + (chars * char_delay)))"
     else
         msg_time=$msg_time_default
     fi
