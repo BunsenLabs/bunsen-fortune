@@ -2,19 +2,19 @@
 
 msg_icon=bunsen-face
 msg_time_default=20000
-msg_time=$msg_time_default
+
 # name of fortune file(s) to use
 cookie=cbbl
 debug=0
 
-#~ It is said that average reading speed is ~250 words per minute for adults.
-#~ That means 4.166667 words per second.
-#~ I think it's fair to assume that the text should linger quite a bit longer,
-#~ about twice as long. make that 2 words per second, that's a delay of 500ms
-#~ per word:
-word_delay=500
+# Improved algorithm:
+# 1. a fixed delay
+# 2. word_delay
+# 3. char_delay
+# (the final delay is added together from all these)
+delay=1500
+word_delay=300
 char_delay=30
-delay=2000
 
 HELP="  bl-fortune is a script to display custom fortunes.
 
@@ -37,7 +37,7 @@ Options:
         message display time.
 
         -t <time>, --expiry-time=<time> set fixed message expiry time
-                                    (default is ${msg_time}ms)
+                                    (default is ${msg_time_default}ms)
                                     (overrides -d, -w, -c)
         -C <name>, --cookie='<name>[ name]'  set fortune cookie list(s)
                                     (default is $cookie)
@@ -148,19 +148,11 @@ done
 
 text="$(fortune $cookie)"
 
-#~ if (( delay > 0 )); then
-    #~ words="$(wc -w <<<"$text")"
-    #~ if (( words > 0 )); then
-        #~ msg_time="$(( words * delay ))"
-    #~ else
-        #~ msg_time=$msg_time_default
-    #~ fi
-#~ fi
-
-# Improved algorithm, adding
+# Improved algorithm:
 # 1. a fixed delay
 # 2. word_delay
 # 3. char_delay
+# (the final delay (msg_time) is added together from all these)
 if (( delay > 0 )) && (( word_delay > 0 )) && (( char_delay > 0 )); then
     words="$(wc -w <<<"$text")"
     chars="$(wc -m <<<"$text")"
