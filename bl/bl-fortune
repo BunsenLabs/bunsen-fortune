@@ -47,7 +47,7 @@ Options:
                                     Default is $cookie
                                     This can contain multiple fortunes and
                                     options to fortune. Example:
-                                    \"-ae cbbl fortunes\"
+                                    \"-e cbbl fortunes\"
         -D                          Debug - enable some terminal messages
         -h, --help  show this message
 
