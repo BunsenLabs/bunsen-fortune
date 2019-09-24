@@ -12,7 +12,7 @@ debug=0
 # 2. word_delay
 # 3. char_delay
 # (the final delay is added together from all these)
-delay=1500
+delay=2500
 word_delay=300
 char_delay=30
 
@@ -22,33 +22,33 @@ Usage:  bl-fortune [OPTIONS]
 
 Options:
         -i <icon>, --icon=<icon>    use different icon
-                                    (default is $msg_icon)
+                                    Default is $msg_icon
         -w <time>, --word-delay=<time> set delay per word
-                                    (default is ${word_delay}ms)
-                                    (overrides -t)
+                                    Default is ${word_delay}ms
+                                    Overrides -t
         -c <time>, --char-delay=<time> set delay per character
-                                    (default is ${char_delay}ms)
-                                    (overrides -t)
+                                    Default is ${char_delay}ms
+                                    Overrides -t
         -d <time>, --delay=<time> set initial delay
-                                    (default is ${delay}ms)
-                                    (overrides -t)
+                                    Default is ${delay}ms
+                                    Overrides -t
 
         The options -w, -c and -d are cumulative, they add up to a final 
         message display time.
 
         -t <time>, --expiry-time=<time> set fixed message expiry time
-                                    (default is ${msg_time_default}ms)
-                                    (overrides -d, -w, -c)
+                                    Default is ${msg_time_default}ms
+                                    Overrides -d, -w, -c
         -C <name>, --cookie='<name>[ name]'  set fortune cookie list(s)
-                                    (default is $cookie)
-                                    (this can contain multiple fortunes and
+                                    Default is $cookie
+                                    This can contain multiple fortunes and
                                     options to fortune. Example:
-                                    \"-ae cbbl fortunes\")
-        -D                          debug - enable some terminal messages
+                                    \"-ae cbbl fortunes\"
+        -D                          Debug - enable some terminal messages
         -h, --help  show this message
 
 Description:
-        This is a wrapper round notify-send
+        This is a wrapper around notify-send
         - the icon and time options are the same.
         Normally run without options,
         the default behaviour is to choose a fortune
