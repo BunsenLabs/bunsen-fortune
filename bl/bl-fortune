@@ -157,7 +157,7 @@ if (( delay > 0 )) && (( word_delay > 0 )) && (( char_delay > 0 )); then
     words="$(wc -w <<<"$text")"
     chars="$(wc -m <<<"$text")"
     if (( words > 0 )) && (( chars > 0 )); then
-        msg_time="$(( fixed_delay + (words * word_delay) + (chars * char_delay)))"
+        msg_time="$(( delay + (words * word_delay) + (chars * char_delay)))"
     else
         msg_time=$msg_time_default
     fi
