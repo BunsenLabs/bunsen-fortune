@@ -14,8 +14,8 @@ msg_time=0
 # 3. char_delay
 # (the final delay is added together from all these)
 delay=2000
-word_delay=300
-char_delay=30
+word_delay=250
+char_delay=25
 
 HELP="  bl-fortune is a script to display custom fortunes.
 
