@@ -187,6 +187,6 @@ escapes "$text"
 text="$retval"
 debug "Text:     $text"
 
-notify-send --urgency=low --icon="$msg_icon" --expire-time="$msg_time" "$header" "$text"
+notify-send --icon="$msg_icon" --expire-time="$msg_time" "$header" "$text"
 
 exit
