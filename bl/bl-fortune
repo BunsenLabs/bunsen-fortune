@@ -1,18 +1,21 @@
 #!/bin/bash
 
 msg_icon=bunsen-face
-msg_time_default=20000
-msg_time=$msg_time_default
+
 # name of fortune file(s) to use
 cookie=cbbl
 debug=0
+msg_time_default=20000
+msg_time=0
 
-#~ It is said that average reading speed is ~250 words per minute for adults.
-#~ That means 4.166667 words per second.
-#~ I think it's fair to assume that the text should linger quite a bit longer,
-#~ about twice as long. make that 2 words per second, that's a delay of 500ms
-#~ per word:
-delay=500
+# Improved algorithm:
+# 1. a fixed delay
+# 2. word_delay
+# 3. char_delay
+# (the final delay is added together from all these)
+init_delay=2000
+word_delay=250
+char_delay=25
 
 HELP="  bl-fortune is a script to display custom fortunes.
 
@@ -20,29 +23,42 @@ Usage:  bl-fortune [OPTIONS]
 
 Options:
         -i <icon>, --icon=<icon>    use different icon
-                                    (default is $msg_icon)
-        -d <time>, --word-delay=<time> set delay per word, calculates
-                                    message expiry time based on text length
-                                    (default is ${delay}ms)
-                                    (overrides -t)
-        -t <time>, --expiry-time=<time> set message expiry time
-                                    (default is ${msg_time}ms)
-                                    (overrides -d)
-        -c <name>, --cookie='<name>[ name]'  set fortune cookie list(s)
-                                    (default is $cookie)
-                                    (this can contain multiple fortunes and
+                                    Default is $msg_icon
+        -w <time>, --word-delay=<time> set delay per word
+                                    Default is ${word_delay}ms
+                                    Overrides -t
+        -c <time>, --char-delay=<time> set delay per character
+                                    Default is ${char_delay}ms
+                                    Overrides -t
+        -d <time>, --init-delay=<time> set initial delay
+                                    Default is ${init_delay}ms
+                                    Overrides -t
+
+        The options -w, -c and -d are cumulative, they add up to a final 
+        message display time. This is the default mode of operation.
+        It can be overridden with:
+
+        -t <time>, --time=<time>    set fixed message expiry time in ms.
+                                    If one of the options -w, -c or -d have been
+                                    set incorrectly (0 or smaller), this is the 
+                                    fallback value: ${msg_time_default}ms
+
+        Mixing -w, -c, -d options with -t option can result in strange timing.
+
+        -C <name>, --cookie='<name>[ name]'  set fortune cookie list(s)
+                                    Default is $cookie
+                                    This can contain multiple fortunes and
                                     options to fortune. Example:
-                                    \"-ae cbbl fortunes\")
-        -D                          debug - enable some terminal messages
+                                    bl-fortune -C \"-e cbbl fortunes\"
+                                    (enclose multiple words in quotes)
+        -D                          Debug - enable some terminal messages
         -h, --help  show this message
 
 Description:
-        This is a wrapper round notify-send
-        - the icon and time options are the same.
-        Normally run without options,
-        the default behaviour is to choose a fortune
-        from the 'cbbl' collection, which is gathered
-        from CrunchBang and BunsenLabs forum posts.
+        This is a wrapper around notify-send. The default behaviour is to choose
+        a fortune from the 'cbbl' collection, which is gathered from CrunchBang
+        and BunsenLabs forum posts, and display it for a time appropriate to the
+        length of the quote, along with the obnoxious Beaker icon.
 "
 
 error_exit() {
@@ -58,8 +74,8 @@ escapes() {
     retval="${retval//\"/\&quot;}"
 }
 
-debugging() {
-    [[ "$debug" == 1 ]] && echo "$@"
+debug() {
+    [[ "$debug" == 1 ]] && echo -e "$@"
 }
 
 while [[ -n $1 ]]
@@ -79,29 +95,47 @@ do
         ;;
     -t)
         msg_time="$2"
-        delay=0
+        init_delay=0
+        word_delay=0
+        char_delay=0
         shift 2
         ;;
-    --expire-time=*)
-        msg_time="${1#--expire-time=}"
-        delay=0
+    --time=*)
+        msg_time="${1#--time=}"
+        init_delay=0
+        word_delay=0
+        char_delay=0
         shift
         ;;
     -d)
-        delay="$2"
-        msg_time=0
+        init_delay="$2"
         shift 2
+        ;;
+    --init-delay=*)
+        init_delay="${1#--init-delay=}"
+        shift
+        ;;
+    -w)
+        word_delay="$2"
+        shift 2
+        ;;
+    --word-delay=*)
+        word_delay="${1#--word-delay=}"
+        shift
+        ;;
+    -c)
+        char_delay="$2"
+        shift 2
+        ;;
+    --char-delay=*)
+        char_delay="${1#--char-delay=}"
+        shift
         ;;
     -D)
         debug=1
         shift 1
         ;;
-    --word-delay=*)
-        delay="${1#--word-delay=}"
-        msg_time=0
-        shift
-        ;;
-    -c)
+    -C)
         cookie="$2"
         shift 2
         ;;
@@ -117,16 +151,23 @@ done
 
 text="$(fortune $cookie)"
 
-if (( delay > 0 )); then
+# Improved algorithm:
+# 1. an initial delay
+# 2. word_delay
+# 3. char_delay
+# (the final delay (msg_time) is added together from all these)
+if (( init_delay > 0 )) || (( word_delay > 0 )) || (( char_delay > 0 )); then
+    debug "Calculate a text-based message time\ninit_delay: $init_delay\nword_delay: $word_delay\nchar_delay: $char_delay"
     words="$(wc -w <<<"$text")"
-    if (( words > 0 )); then
-        msg_time="$(( words * delay ))"
-    else
-        msg_time=$msg_time_default
-    fi
+    chars="$(wc -m <<<"$text")"
+    msg_time="$(( init_delay + (words * word_delay) + (chars * char_delay)))"
+    (( msg_time <= 0 )) && debug "Invalid value for msg_time: $msg_time - using fixed message time" && msg_time=$msg_time_default
+else
+    debug "Fixed message time"
+    (( msg_time <= 0 )) && msg_time=$msg_time_default
 fi
 
-debugging "Timeout:  ${msg_time}ms"
+debug "Timeout:  ${msg_time}ms"
 
 header=( $text )
 if (( "${#header[0]}" < 4 )) && (( "${#header[1]}" < 16 )); then
@@ -141,12 +182,12 @@ text="${text# }"
 
 escapes "$header"
 header="$retval"
-debugging "Header:   $header"
+debug "Header:   $header"
 
 escapes "$text"
 text="$retval"
-debugging "Text:     $text"
+debug "Text:     $text"
 
-notify-send --urgency=low --icon="$msg_icon" --expire-time="$msg_time" "$header" "$text"
+notify-send --icon="$msg_icon" --expire-time="$msg_time" "$header" "$text"
 
 exit
