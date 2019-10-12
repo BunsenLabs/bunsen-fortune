@@ -43,6 +43,8 @@ Options:
                                     set incorrectly (0 or smaller), this is the 
                                     fallback value: ${msg_time_default}ms
 
+        Mixing -w, -c, -d options with -t option can result in strange timing.
+
         -C <name>, --cookie='<name>[ name]'  set fortune cookie list(s)
                                     Default is $cookie
                                     This can contain multiple fortunes and
@@ -53,12 +55,10 @@ Options:
         -h, --help  show this message
 
 Description:
-        This is a wrapper around notify-send
-        - the icon and time options are the same.
-        Normally run without options,
-        the default behaviour is to choose a fortune
-        from the 'cbbl' collection, which is gathered
-        from CrunchBang and BunsenLabs forum posts.
+        This is a wrapper around notify-send. The default behaviour is to choose
+        a fortune from the 'cbbl' collection, which is gathered from CrunchBang
+        and BunsenLabs forum posts, and display it for a time appropriate to the
+        length of the quote, along with the obnoxious Beaker icon.
 "
 
 error_exit() {
