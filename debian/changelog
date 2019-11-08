@@ -1,3 +1,10 @@
+bunsen-fortune (10.1-1) lithium; urgency=medium
+
+  [ Ohnonot ]
+  * Improve script, add more fortunes.
+
+ -- John Crawley <john@bunsenlabs.org>  Fri, 08 Nov 2019 17:03:57 +0900
+
 bunsen-fortune (10.0-1) lithium; urgency=medium
 
   * Migrate to Lithium repository.
