@@ -3,7 +3,7 @@ Upstream-Name: fortune-mod-cbbl
 Source: https://notabug.org/ohnonot/fortune-mod-cbbl
 
 Files: *
-Copyright: 2015-2018 ohnonot <ohnonot-github@posteo.de>
+Copyright: 2015-2019 ohnonot <ohnonot-github@posteo.de>
 License: GPL-3.0+
 
 Files: debian/*
