@@ -9,7 +9,9 @@ To be used as fortune cookies with `fortune`.
 
 `fortune cbbl`
 
-If you choose to not install, you have to run it with `fortune build` from the repo's root.
+There's also a script in `bl/bl-fortune` that can be invoked to send notifications with random quotes. Please see `bl/bl-fortune -h` for more info.
+
+If you choose to not install this package, you have to run it with `fortune build` from the repo's root (see Installation).
 
 ## Dependencies
 
