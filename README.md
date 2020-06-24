@@ -38,6 +38,9 @@ if you want to add or change something. or make a merge request, or pm me, anyth
 
 ## Rules for adding new quotes
 
+- must come from BL or crunchbang forum (we'd love some more #! forum items!)
 - must work out of context
-- must be original, meaning it must not be another person's re-quote. It must genuinely come from a BL forum member.
-- must be family friendly or safe for work or whatever that's usually called
+- must be original, meaning it must not be another person's re-quote.
+- must be family friendly or safe for work or whatever that's usually called - but since BL forum is family friendly anyhow that goes without saying. And don't take this too strictly ;)
+
+It does __not__ have to be a joke, It can be quoteworthy for many reasons. Fell free, we add what _you_ want, not what this repo's maintainer wants!
