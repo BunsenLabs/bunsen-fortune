@@ -36,8 +36,8 @@ width to fold, always respecting word boundaries. This can be useful when fortun
 Please open an Issue, or post to [this thread](https://forums.bunsenlabs.org/viewtopic.php?id=644)
 if you want to add or change something. or make a merge request, or pm me, anything!
 
-## TODO:
+## Rules for adding new quotes
 
-* more quotes/cookies. anything is welcome, really.
-* debian package.
-* AUR package.
+- must work out of context
+- must be original, meaning it must not be another person's re-quote. It must genuinely come from a BL forum member.
+- must be family friendly or safe for work or whatever that's usually called
