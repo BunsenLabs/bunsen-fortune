@@ -36,8 +36,12 @@ width to fold, always respecting word boundaries. This can be useful when fortun
 Please open an Issue, or post to [this thread](https://forums.bunsenlabs.org/viewtopic.php?id=644)
 if you want to add or change something. or make a merge request, or pm me, anything!
 
-## TODO:
+## Do's and Don't's for adding new quotes
 
-* more quotes/cookies. anything is welcome, really.
-* debian package.
-* AUR package.
+- must come from BL or crunchbang forum (we'd love some more #! forum items!)
+- must work out of context
+- must be original, meaning it must not be another person's re-quote.
+- must be family friendly or safe for work or whatever that's usually called - but since BL forum is family friendly anyhow that goes without saying. And don't take this too strictly ;)
+- don't abuse this to glorify yourself or push some agenda; think of the BL community, and the users reading this when they log into their system. If in doubt it often helps to wait 24h, then think again.
+
+It does __not__ have to be a joke, It can be quoteworthy for many reasons. We add what _you_ want, not what this repo's maintainer wants!
