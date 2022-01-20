@@ -1,3 +1,10 @@
+bunsen-fortune (11.1-1) beryllium; urgency=medium
+
+  [ Ohnonot ]
+  * Add latest fortunes.
+
+ -- John Crawley <john@bunsenlabs.org>  Thu, 20 Jan 2022 13:26:32 +0900
+
 bunsen-fortune (11.0-1) beryllium; urgency=medium
 
   * Migrate for Debian Bullseye.
