@@ -7,6 +7,7 @@ override_dh_install:
 	mkdir -p debian/tmp
 	cp cbbl debian/tmp
 	strfile debian/tmp/cbbl
+	rm debian/tmp/cbbl
 	dh_install
 
 override_dh_installman:
